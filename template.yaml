@@ -9,4 +9,30 @@ Resources:
       Name: compare-yourself
       StageName: dev
       Description: Allows users to compare themselves
+      DefinitionBody:
+        openapi: 3.0.0
+        paths:
+           /compare-yourself:
+             x-amazon-apigateway-cors:
+               allowMethods:
+                 - GET
+                 - POST
+                 - PUT
+                 - DELETE
+                 - OPTIONS
+                 - HEAD
+                 - PATCH        
+               allowOrigins:
+                 - '*'
+               allowHeaders:
+                 - 'Content-Type'
+                 - 'X-Amz-Date'
+                 - 'Authorization'
+                 - 'X-Api-Key'
+               maxAge: 3600
+             get:
+               responses:
+                 '200':
+                   description: OK
+                
 
