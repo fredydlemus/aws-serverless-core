@@ -3,36 +3,19 @@ Transform: AWS::Serverless-2016-10-31
 Description: compare-yourself-app
 
 Resources:
-  ApiGatewayApi:
-    Type: AWS::Serverless::Api
+  cyStoreDataFunction:
+    Type: AWS::Serverless::Function
     Properties:
-      Name: compare-yourself
-      StageName: dev
-      Description: Allows users to compare themselves
-      DefinitionBody:
-        openapi: 3.0.0
-        paths:
-           /compare-yourself:
-             x-amazon-apigateway-cors:
-               allowMethods:
-                 - GET
-                 - POST
-                 - PUT
-                 - DELETE
-                 - OPTIONS
-                 - HEAD
-                 - PATCH        
-               allowOrigins:
-                 - '*'
-               allowHeaders:
-                 - 'Content-Type'
-                 - 'X-Amz-Date'
-                 - 'Authorization'
-                 - 'X-Api-Key'
-               maxAge: 3600
-             get:
-               responses:
-                 '200':
-                   description: OK
-                
+      Handler: src/handlers/cy-store-data.cyStoreDataHandler
+      Runtime: nodejs20.x
+      Architectures:
+        - x86_64
+      MemorySize: 128
+      Timeout: 100
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /compare-yourself
+            Method: POST
 
