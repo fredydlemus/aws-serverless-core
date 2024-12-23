@@ -33,5 +33,6 @@ jobs:
                 --template-file .aws-sam/build/template.yaml \
                 --capabilities CAPABILITY_IAM \
                 --no-fail-on-empty-changeset \
+                --resolve-s3
 
         
