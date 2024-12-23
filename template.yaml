@@ -8,7 +8,7 @@ Resources:
     Properties:
       StageName: Dev
       Cors:
-        AllowMethods: "'POST"
+        AllowMethods: "'POST'"
         AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'"
         AllowOrigin: "'*'"
         MaxAge: "'600'"
