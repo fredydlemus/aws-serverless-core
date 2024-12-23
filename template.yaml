@@ -3,6 +3,16 @@ Transform: AWS::Serverless-2016-10-31
 Description: compare-yourself-app
 
 Resources:
+  ApiGatewayApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Dev
+      Cors:
+        AllowMethods: "'POST"
+        AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'"
+        AllowOrigin: "'*'"
+        MaxAge: "'600'"
+        AllowCredentials: "'true'"
   cyStoreDataFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -13,9 +23,11 @@ Resources:
       MemorySize: 128
       Timeout: 100
       Events:
-        Api:
+        ApiEvent:
           Type: Api
           Properties:
             Path: /compare-yourself
             Method: POST
+            RestApiId:
+              Ref: ApiGatewayApi
 
