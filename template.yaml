@@ -7,17 +7,51 @@ Resources:
     Type: AWS::Serverless::Api
     Properties:
       StageName: Dev
-      Cors:
-        AllowMethods: "'*'"
-        AllowHeaders:
-          - "'Content-Type'"
-          - "'Authorization'"
-          - "'X-Api-Key'"
-          - "'X-Amz-Security-Token'"
-          - "'X-Amz-User-Agent'"
-        AllowOrigin: "'*'"
-        MaxAge: "'600'"
-        AllowCredentials: true
+      DefinitionBody:
+        openapi: 3.0.1
+        info:
+          title: !Sub ${AWS::StackName}
+          version: 1.0.0
+        paths:
+          /compare-yourself:
+            post:
+              x-amazon-apigateway-integration:
+                type: "AWS" 
+                httpMethod: "POST"
+                uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${cyStoreDataFunction.Arn}/invocations"
+                passthroughBehavior: "WHEN_NO_MATCH"
+                integrationHttpMethod: "POST"
+                responses:
+                  default:
+                    statusCode: "200"
+            options:
+              summary: "CORS support"
+              responses:
+                '200':
+                  description: "Default response for CORS method"
+                  headers:
+                    Access-Control-Allow-Origin:
+                      schema:
+                        type: string
+                    Access-Control-Allow-Headers:
+                      schema:
+                        type: string
+                    Access-Control-Allow-Methods:
+                      schema:
+                        type: string
+              x-amazon-apigateway-integration:
+                type: "mock"
+                requestTemplates:
+                  application/json: '{"statusCode": 200}'
+                responses:
+                  default:
+                    statusCode: "200"
+                    responseParameters:
+                      method.response.header.Access-Control-Allow-Origin: "'*'"
+                      method.response.header.Access-Control-Allow-Headers: 
+                        "'Content-Type,Authorization,X-Amz-Date,X-Amz-Security-Token,X-Api-Key'"
+                      method.response.header.Access-Control-Allow-Methods: "'*'"
+
   cyStoreDataFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -27,12 +61,13 @@ Resources:
         - x86_64
       MemorySize: 128
       Timeout: 30
-      Events:
-        ApiEvent:
-          Type: Api
-          Properties:
-            Path: /compare-yourself
-            Method: POST
-            RestApiId:
-              Ref: ApiGatewayApi
+      
+  MyLambdaPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !GetAtt cyStoreDataFunction.Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${ApiGatewayApi}/*/*"
+
 
