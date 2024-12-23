@@ -6,5 +6,7 @@ Resources:
   ApiGatewayApi:
     Type: AWS::Serverless::Api
     Properties:
+      Name: compare-yourself
       StageName: dev
+      Description: Allows users to compare themselves
 
