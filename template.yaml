@@ -9,10 +9,15 @@ Resources:
       StageName: Dev
       Cors:
         AllowMethods: "'*'"
-        AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'"
+        AllowHeaders:
+          - "'Content-Type'"
+          - "'Authorization'"
+          - "'X-Api-Key'"
+          - "'X-Amz-Security-Token'"
+          - "'X-Amz-User-Agent'"
         AllowOrigin: "'*'"
         MaxAge: "'600'"
-        AllowCredentials: "'true'"
+        AllowCredentials: true
   cyStoreDataFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -21,7 +26,7 @@ Resources:
       Architectures:
         - x86_64
       MemorySize: 128
-      Timeout: 100
+      Timeout: 30
       Events:
         ApiEvent:
           Type: Api
