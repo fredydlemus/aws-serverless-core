@@ -26,11 +26,11 @@ Resources:
                     statusCode: "200"
               responses:
                 '200':
-                description: "Successful operation"
-                content:
-                  application/json:
-                    schema:
-                      type: object
+                  description: "Successful operation"
+                  content:
+                    application/json:
+                      schema:
+                        type: object
             options:
               summary: "CORS support"
               responses:
