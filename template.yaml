@@ -16,7 +16,7 @@ Resources:
           /compare-yourself:
             post:
               x-amazon-apigateway-integration:
-                type: "AWS" 
+                type: "AWS_PROXY" 
                 httpMethod: "POST"
                 uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${cyStoreDataFunction.Arn}/invocations"
                 passthroughBehavior: "WHEN_NO_MATCH"
