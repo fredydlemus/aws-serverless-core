@@ -19,8 +19,11 @@ Resources:
                 type: "AWS" 
                 httpMethod: "POST"
                 uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${cyStoreDataFunction.Arn}/invocations"
-                passthroughBehavior: "WHEN_NO_MATCH"
+                passthroughBehavior: "WHEN_NO_TEMPLATES"
                 integrationHttpMethod: "POST"
+                requestTemplates:
+                  application/json: |
+                    {}                    
                 responses:
                   default:
                     statusCode: "200"
