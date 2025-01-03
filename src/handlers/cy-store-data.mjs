@@ -1,3 +1,7 @@
 export const cyStoreDataHandler = (event, context, callback) => {
-    callback(null, event)
+    callback(null, {
+        headers: {
+            'Control-Access-Allow-Origin': '*'
+        }
+    })
 }
