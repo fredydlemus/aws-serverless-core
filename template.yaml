@@ -17,6 +17,7 @@ Resources:
             post:
               requestBody:
                 required: true
+                validateBody: true
                 content:
                   application/json:
                     schema:
