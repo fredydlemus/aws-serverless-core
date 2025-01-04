@@ -22,6 +22,8 @@ Resources:
                 passthroughBehavior: "WHEN_NO_TEMPLATES"
                 integrationHttpMethod: "POST"
                 requestTemplates:
+                  # $input => request data (params, body)
+                  # $ => request body
                   application/json: |
                     {
                       "age": $input.json('$.personData.age')
@@ -34,6 +36,9 @@ Resources:
                       method.response.header.Access-Control-Allow-Headers: 
                         "'Content-Type,Authorization,X-Amz-Date,X-Amz-Security-Token,X-Api-Key'"
                       method.response.header.Access-Control-Allow-Methods: "'*'"
+                    responseTemplates:
+                      application/json: |
+                        {}
               responses:
                 '200':
                   description: "Successful operation"
