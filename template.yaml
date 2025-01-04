@@ -15,6 +15,25 @@ Resources:
         paths:
           /compare-yourself:
             post:
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      required:
+                        - age
+                        - height
+                        - income
+                      properties:
+                        age:
+                          type: integer
+                        height:
+                          type: integer
+                        income:
+                          type: integer
+                        
+                        
               x-amazon-apigateway-integration:
                 type: "AWS" 
                 httpMethod: "POST"
