@@ -45,9 +45,10 @@ Resources:
                   # $input => request data (params, body)
                   # $ => request body
                   application/json: |
+                    #set($inputRoot = $input.path('$'))
                     {
-                      "age": $input.json('$.personData.age')
-                    }                    
+                      "age": $inputRoot.age,
+                    }                   
                 responses:
                   default:
                     statusCode: "200"
