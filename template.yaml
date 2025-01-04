@@ -23,7 +23,9 @@ Resources:
                 integrationHttpMethod: "POST"
                 requestTemplates:
                   application/json: |
-                    {}                    
+                    {
+                      "age": $input.json('$.personData.age')
+                    }                    
                 responses:
                   default:
                     statusCode: "200"
