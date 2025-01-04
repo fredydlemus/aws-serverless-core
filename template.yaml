@@ -47,7 +47,7 @@ Resources:
                   application/json: |
                     #set($inputRoot = $input.path('$'))
                     {
-                      "age": $inputRoot.age,
+                      "age": $inputRoot.age
                     }                   
                 responses:
                   default:
