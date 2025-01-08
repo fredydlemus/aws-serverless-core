@@ -106,6 +106,23 @@ Resources:
                       method.response.header.Access-Control-Allow-Headers: 
                         "'Content-Type,Authorization,X-Amz-Date,X-Amz-Security-Token,X-Api-Key'"
                       method.response.header.Access-Control-Allow-Methods: "'*'"
+            delete:
+              responses:
+                '200':
+                  description: "Successful operation"
+                  content:
+                    application/json:
+                      schema:
+                        type: object
+              x-amazon-apigateway-integration:
+                type: "AWS"
+                uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${cyDeleteDataFunction.Arn}/invocations"
+                httpMethod: "DELETE"
+                passthroughBehavior: "WHEN_NO_MATCH"
+                responses:
+                  default:
+                    statusCode: 200
+
 
   cyStoreDataFunction:
     Type: AWS::Serverless::Function
@@ -116,6 +133,16 @@ Resources:
         - x86_64
       MemorySize: 128
       Timeout: 30
+
+  cyDeleteDataFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/cy-delete-data.cyDeleteDataHandler
+      Runtime: nodejs20.x
+      Architectures:
+        - x86_64
+      MemorySize: 128
+      Timeout: 30s
       
   MyLambdaPermission:
     Type: AWS::Lambda::Permission
