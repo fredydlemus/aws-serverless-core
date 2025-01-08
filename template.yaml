@@ -142,7 +142,7 @@ Resources:
       Architectures:
         - x86_64
       MemorySize: 128
-      Timeout: 30s
+      Timeout: 30
       
   MyLambdaPermission:
     Type: AWS::Lambda::Permission
