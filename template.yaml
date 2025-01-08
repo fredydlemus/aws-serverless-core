@@ -137,7 +137,8 @@ Resources:
   cyDeleteDataFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/cy-delete-data.cyDeleteDataHandler
+      CodeUri: src/handlers/cy-delete-data
+      Handler: cyDeleteDataHandler
       Runtime: nodejs20.x
       Architectures:
         - x86_64
