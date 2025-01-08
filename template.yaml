@@ -144,6 +144,14 @@ Resources:
         - x86_64
       MemorySize: 128
       Timeout: 30
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /compare-yourself
+            Method: delete
+            RestApiId: !Ref ApiGatewayApi
+
       
   MyLambdaPermission:
     Type: AWS::Lambda::Permission
