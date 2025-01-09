@@ -13,7 +13,7 @@ Resources:
           title: !Sub ${AWS::StackName}
           version: 1.0.0
         paths:
-          /compare-yourself/{type}:
+          /compare-yourself:
             post:
               requestBody:
                 required: true
@@ -119,6 +119,7 @@ Resources:
                 responses:
                   default:
                     statusCode: 200
+          /compare-yourself/{type}:
             get:
               parameters:
                 - name: type
