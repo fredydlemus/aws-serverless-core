@@ -138,7 +138,12 @@ Resources:
                 type: AWS
                 uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${cyGetDataFunction.Arn}/invocations
                 httpMethod: POST
-                passthroughBehavior: WHEN_NO_MATCH
+                passthroughBehavior: WHEN_NO_TEMPLATES
+                requestTemplates:
+                  application/json: |
+                    {
+                      "type": "$input.params('type')"
+                    }
                 responses:
                   default:
                     statusCode: 200
