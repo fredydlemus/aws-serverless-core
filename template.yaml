@@ -12,6 +12,10 @@ Resources:
         info:
           title: !Sub ${AWS::StackName}
           version: 1.0.0
+        x-amazon-apigateway-request-validators:
+          ValidateParams:
+            validateRequestParameters: true
+            ValidateRequestBody: false
         paths:
           /compare-yourself:
             post:
@@ -121,6 +125,7 @@ Resources:
                     statusCode: 200
           /compare-yourself/{type}:
             get:
+              x-amazon-apigateway-request-validator: ValidateParams
               parameters:
                 - name: type
                   in: path
