@@ -127,17 +127,27 @@ Resources:
   cyStoreDataFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/cy-store-data.cyStoreDataHandler
+      CodeUri: ./src/handlers
+      Handler: cy-store-data.cyStoreDataHandler
       Runtime: nodejs20.x
+      FunctionName: cyStoreDataFunction
       Architectures:
         - x86_64
       MemorySize: 128
       Timeout: 30
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /compare-yourself
+            Method: post
+            RestApiId: !Ref ApiGatewayApi
 
   cyDeleteDataFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: ./src/handlers
+      FunctionName: cyDeleteDataFunction
       Handler: cy-delete-data.cyDeleteDataHandler
       Runtime: nodejs20.x
       Architectures:
@@ -152,13 +162,5 @@ Resources:
             Method: delete
             RestApiId: !Ref ApiGatewayApi
 
-      
-  MyLambdaPermission:
-    Type: AWS::Lambda::Permission
-    Properties:
-      Action: lambda:InvokeFunction
-      FunctionName: !GetAtt cyStoreDataFunction.Arn
-      Principal: apigateway.amazonaws.com
-      SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${ApiGatewayApi}/*/*"
 
 
