@@ -117,7 +117,7 @@ Resources:
               x-amazon-apigateway-integration:
                 type: "AWS"
                 uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${cyDeleteDataFunction.Arn}/invocations"
-                httpMethod: "DELETE"
+                integrationHttpMethod: "DELETE"
                 passthroughBehavior: "WHEN_NO_MATCH"
                 responses:
                   default:
