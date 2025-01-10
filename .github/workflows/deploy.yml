@@ -9,6 +9,7 @@ on:
 env:
     AWS_REGION: us-east-1
     STACK_NAME: compare-yourself-app
+    SAM_CLI_VERSION: 1.131.0
 
 jobs:
     deploy-dev:
@@ -16,6 +17,15 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
+
+            - name: Cache SAM CLI
+              id: cache-sam
+              uses: actions/cache@v3
+              with:
+                path: |
+                  ~/.aws-sam
+                  ~/.sam
+                key: sam-cli-${{ runner.os }}-${{ env.SAM_CLI_VERSION }}
 
             - name: Configure AWS Credentials
               uses: aws-actions/configure-aws-credentials@v4
@@ -26,16 +36,17 @@ jobs:
 
             - name: Setup SAM CLI
               uses: aws-actions/setup-sam@v2
+              with:
+                version: ${{ env.SAM_CLI_VERSION }}
+              if: steps.cache-sam.outputs.cache-hit != 'true'
 
             - name: Build SAM application
               run: sam build
 
+            - name: Package SAM application
+              run: sam package
+
             - name: Deploy
-              run: |
-                sam deploy --stack-name ${{env.STACK_NAME}} \
-                --template-file .aws-sam/build/template.yaml \
-                --capabilities CAPABILITY_IAM \
-                --no-fail-on-empty-changeset \
-                --resolve-s3
+              run: sam deploy
 
         
