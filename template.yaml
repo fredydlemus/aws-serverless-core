@@ -16,9 +16,13 @@ Resources:
           ValidateParams:
             validateRequestParameters: true
             ValidateRequestBody: false
+          ValidateBody:
+            validateRequestParameters: false
+            validateRequestBody: true
         paths:
           /compare-yourself:
             post:
+              x-amazon-api-gateway-request-validator: ValidateBody
               requestBody:
                 required: true
                 validateBody: true
