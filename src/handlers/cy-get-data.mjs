@@ -1,4 +1,5 @@
 export const cyGetDataHandler = (event, context, callback) => {
+    console.log(event)
     const type = event.type
     if(type === 'all'){
         callback(null, 'all the data')
