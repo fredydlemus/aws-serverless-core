@@ -22,7 +22,7 @@ Resources:
         paths:
           /compare-yourself:
             post:
-              x-amazon-api-gateway-request-validator: ValidateBody
+              x-amazon-apigateway-request-validator: ValidateBody
               requestBody:
                 required: true
                 validateBody: true
