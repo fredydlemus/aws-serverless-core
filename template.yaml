@@ -267,3 +267,26 @@ Resources:
             Path: /compare-yourself/{type}
             Method: get
             RestApiId: !Ref ApiGatewayApi
+
+  compareYourselfTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: compare-yourself-table
+      BillingMode: PROVISIONED
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+      AttributeDefinitions:
+        - AttributeName: UserId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: UserId
+          KeyType: HASH
+
+Outputs:
+  ApiEndpoint:
+    Description: URL of the API endpoint
+    Value: !Sub 'https://${ApiGatewayApi}.execute-api.${AWS::Region}.amazonaws.com/Dev/compare-yourself'
+  TableName:
+    Description: Table name
+    Value: !Ref compareYourselfTable
