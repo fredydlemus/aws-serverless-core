@@ -222,6 +222,9 @@ Resources:
         - x86_64
       MemorySize: 128
       Timeout: 30
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref compareYourselfTable
       Events:
         ApiEvent:
           Type: Api
