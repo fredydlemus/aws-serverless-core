@@ -9,7 +9,7 @@ const docClient = DynamoDBDocumentClient.from(client);
 
 export const cyStoreDataHandler = async (event, context, callback) => {
   const params = {
-    Item: {UserId: "dasasdsa", Age: 27, Height: 72, Income: 2500},
+    Item: {UserId: "user_"+Math.random(), Age: event.age, Height: event.height, Income: event.income},
     TableName: "compare-yourself-table"
   }
 

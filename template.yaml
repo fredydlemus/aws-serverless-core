@@ -55,6 +55,8 @@ Resources:
                     #set($inputRoot = $input.path('$'))
                     {
                       "age": $inputRoot.age
+                      "height": $inputRoot.height,
+                      "income": $inputRoot.income
                     }
                 responses:
                   default:
