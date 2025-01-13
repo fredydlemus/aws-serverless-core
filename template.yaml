@@ -222,6 +222,9 @@ Resources:
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref compareYourselfTable
+      Environment:
+        Variables:
+          DYNAMO_TABLE_NAME: !Ref compareYourselfTable
       Events:
         ApiEvent:
           Type: Api
