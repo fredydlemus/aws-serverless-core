@@ -19,10 +19,21 @@ export const cyGetDataHandler = async (event, context, callback) => {
                 TableName: tableName
             }
 
-            const data = await docClient.send(new ScanCommand(params))
+            const data = await docClient.send(new ScanCommand(params));
+
             console.log(data)
 
-            callback(null, data)
+            const items = data.Items.map(
+                (dataField) => {
+                    return {
+                        age: dataField.Age,
+                        height: dataField.Height,
+                        Income: dataField.Income
+                    }
+                }
+            );
+
+            callback(null, items)
         } catch (error) {
             console.log("Error", error.stack);
             callback(error)
