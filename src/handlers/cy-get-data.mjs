@@ -49,7 +49,11 @@ export const cyGetDataHandler = async (event, context, callback) => {
         const data = await docClient.send(new GetCommand(params))
 
         console.log(data)
-        callback(null, data)
+        callback(null, {
+            age: data.Item.Age,
+            height: data.Item.Height,
+            income: data.Item.Income
+        })
 
        }catch(error){
             console.log("Error", error);
