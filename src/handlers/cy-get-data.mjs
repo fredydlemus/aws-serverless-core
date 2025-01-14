@@ -1,6 +1,6 @@
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
 import {
-    DynamoDBDocumentClient, ScanCommand
+    DynamoDBDocumentClient, ScanCommand, GetCommand
 } from "@aws-sdk/lib-dynamodb";
 
 const client = new DynamoDBClient({ region: 'us-east-1' });
@@ -13,12 +13,11 @@ export const cyGetDataHandler = async (event, context, callback) => {
     console.log(event)
     const type = event.type
     if (type === 'all') {
+        const params = {
+            TableName: tableName
+        }
+
         try {
-
-            const params = {
-                TableName: tableName
-            }
-
             const data = await docClient.send(new ScanCommand(params));
 
             console.log(data)
@@ -39,8 +38,24 @@ export const cyGetDataHandler = async (event, context, callback) => {
             callback(error)
         }
     } else if (type === 'single') {
-        callback(null, 'Just my data')
+       const params = {
+        Key: {
+            UserId: "user_0.9737686412234368"
+        },
+        TableName: tableName
+       }
+
+       try{
+        const data = await docClient.send(new GetCommand(params))
+
+        console.log(data)
+        callback(null, data)
+
+       }catch(error){
+            console.log("Error", error);
+            callback(error)
+       }
     } else {
-        callback(null, 'Hello from lambda!')
+        callback('something went wrong!')
     }
 }
