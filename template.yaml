@@ -264,7 +264,7 @@ Resources:
       MemorySize: 128
       Timeout: 30
       Policies:
-        - DynamoDBWritePolicy:
+        - DynamoDBReadPolicy:
             TableName: !Ref compareYourselfTable
       Environment:
         Variables:
