@@ -220,7 +220,7 @@ Resources:
       MemorySize: 128
       Timeout: 30
       Policies:
-        - DynamoDBCrudPolicy:
+        - DynamoDBWritePolicy:
             TableName: !Ref compareYourselfTable
       Environment:
         Variables:
@@ -264,7 +264,7 @@ Resources:
       MemorySize: 128
       Timeout: 30
       Policies:
-        - DynamoDBCrudPolicy:
+        - DynamoDBWritePolicy:
             TableName: !Ref compareYourselfTable
       Environment:
         Variables:
