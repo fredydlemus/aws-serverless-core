@@ -244,6 +244,12 @@ Resources:
         - x86_64
       MemorySize: 128
       Timeout: 30
+      Policies:
+        - DynamoDBWritePolicy:
+            TableName: !Ref compareYourselfTable
+      Environment:
+        Variables:
+          DYNAMO_TABLE_NAME: !Ref compareYourselfTable
       Events:
         ApiEvent:
           Type: Api
