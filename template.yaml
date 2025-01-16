@@ -245,8 +245,11 @@ Resources:
       MemorySize: 128
       Timeout: 30
       Policies:
-        - DynamoDBWritePolicy:
-            TableName: !Ref compareYourselfTable
+        - Statement:
+            Effect: Allow
+            Action:
+              - dynamodb:DeleteItem
+            Resource: !GetAtt compareYourselfTable.Arn
       Environment:
         Variables:
           DYNAMO_TABLE_NAME: !Ref compareYourselfTable
