@@ -160,10 +160,21 @@ Resources:
                     Access-Control-Allow-Methods:
                       schema:
                         type: string
-                  content:
-                    application/json:
-                      schema:
-                        type: object
+                  schema:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        age: 
+                          type: number
+                        height:
+                          type: number
+                        income:
+                          type: number
+                      required:
+                        - age
+                        - height
+                        - income
               x-amazon-apigateway-integration:
                 type: AWS
                 uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${cyGetDataFunction.Arn}/invocations
