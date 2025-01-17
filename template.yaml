@@ -7,6 +7,22 @@ Resources:
     Type: AWS::Serverless::Api
     Properties:
       StageName: Dev
+      Models:
+        CompareDataArray:
+          type: array
+          items:
+            type: object
+            required:
+              - age
+              - income
+              - height
+            properties:
+              age:
+                type: number
+              height:
+                type: number
+              income:
+                type: number
       DefinitionBody:
         openapi: 3.0.1
         info:
@@ -160,21 +176,8 @@ Resources:
                     Access-Control-Allow-Methods:
                       schema:
                         type: string
-                  schema:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        age: 
-                          type: number
-                        height:
-                          type: number
-                        income:
-                          type: number
-                      required:
-                        - age
-                        - height
-                        - income
+                  schem:
+                    $ref: "#/definitions/CompareDataArray"
               x-amazon-apigateway-integration:
                 type: AWS
                 uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${cyGetDataFunction.Arn}/invocations
