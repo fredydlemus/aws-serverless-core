@@ -40,7 +40,7 @@ export const cyGetDataHandler = async (event, context, callback) => {
     } else if (type === 'single') {
        const params = {
         Key: {
-            UserId: "user_0.9737686412234368"
+            UserId: "user_0.42052971869755074"
         },
         TableName: tableName
        }
