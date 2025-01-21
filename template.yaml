@@ -93,8 +93,7 @@ Resources:
                         type: object
             options:
               summary: CORS support
-              x-amazon-apigateway-auth:
-                type: none
+              x-amazon-apigateway-auth: "NONE"
               responses:
                 '200':
                   description: Default response for CORS method
@@ -207,8 +206,7 @@ Resources:
                       method.response.header.Access-Control-Allow-Methods: '''*'''
             options:
               summary: CORS support
-              x-amazon-apigateway-auth:
-                type: none
+              x-amazon-apigateway-auth: "NONE"
               responses:
                 '200':
                   description: Default response for CORS method
