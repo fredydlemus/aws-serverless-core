@@ -43,4 +43,6 @@ function genPolicy(effect, resource){
     stmt.Effect = effect;
     stmt.Resource = resource;
     policy.Statement.push(stmt)
+
+    return policy;
 }
