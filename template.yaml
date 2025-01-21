@@ -8,7 +8,6 @@ Resources:
     Properties:
       StageName: Dev
       Auth:
-        DefaultAuthorizer: MyLambdaTokenAuthorizer
         Authorizers:
           MyLambdaTokenAuthorizer:
             FunctionArn: !GetAtt cyCustomAuthFunction.Arn
@@ -32,6 +31,9 @@ Resources:
           /compare-yourself:
             post:
               x-amazon-apigateway-request-validator: ValidateBody
+              x-amazon-apigateway-auth:
+                type: AWS_IAM
+                authorizer: MyLambdaTokenAuthorizer
               requestBody:
                 required: true
                 validateBody: true
@@ -137,6 +139,9 @@ Resources:
                     application/json:
                       schema:
                         type: object
+              x-amazon-apigateway-auth:
+                type: AWS_IAM
+                authorizer: MyLambdaTokenAuthorizer
               x-amazon-apigateway-integration:
                 type: AWS
                 uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${cyDeleteDataFunction.Arn}/invocations
@@ -151,6 +156,9 @@ Resources:
                       method.response.header.Access-Control-Allow-Methods: '''*'''
           /compare-yourself/{type}:
             get:
+              x-amazon-apigateway-auth:
+                type: AWS_IAM
+                authorizer: MyLambdaTokenAuthorizer
               x-amazon-apigateway-request-validator: ValidateParams
               parameters:
                 - name: type
@@ -207,8 +215,6 @@ Resources:
                       method.response.header.Access-Control-Allow-Methods: '''*'''
             options:
               summary: CORS support
-              x-amazon-apigateway-auth:
-                type: "NONE"
               responses:
                 '200':
                   description: Default response for CORS method
