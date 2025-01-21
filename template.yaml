@@ -93,7 +93,8 @@ Resources:
                         type: object
             options:
               summary: CORS support
-              x-amazon-apigateway-auth: "NONE"
+              x-amazon-apigateway-auth:
+                type: "NONE"
               responses:
                 '200':
                   description: Default response for CORS method
