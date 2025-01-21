@@ -7,6 +7,15 @@ Resources:
     Type: AWS::Serverless::Api
     Properties:
       StageName: Dev
+      Auth:
+        DefaultAuthorizer: MyLambdaTokenAuthorizer
+        Authorizers:
+          MyLambdaTokenAuthorizer:
+            FunctionArn: !GetAtt cyCustomAuthFunction.Arn
+            FunctionPayloadType: TOKEN
+            Identity:
+              Header: Authorization
+              ReauthorizeEvery: 300
       DefinitionBody:
         openapi: 3.0.1
         info:
@@ -162,8 +171,8 @@ Resources:
                         type: string
                   content:
                     application/json:
-                      schema: 
-                        $ref: "#/components/schemas/CompareDataArray"
+                      schema:
+                        $ref: '#/components/schemas/CompareDataArray'
               x-amazon-apigateway-integration:
                 type: AWS
                 uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${cyGetDataFunction.Arn}/invocations
@@ -179,17 +188,17 @@ Resources:
                     statusCode: 200
                     responseTemplates:
                       application/json: |
-                       #set($inputRoot = $input.path('$'))
-                       [
-                       #foreach($eleme in $inputRoot)
-                       {
-                        "age": $elem.age
-                        "height": $elem.height
-                        "income": $elem.income
-                       }
-                       #if($foreach.hasNext),#end
-                       #end
-                       ]
+                        #set($inputRoot = $input.path('$'))
+                        [
+                        #foreach($eleme in $inputRoot)
+                        {
+                         "age": $elem.age
+                         "height": $elem.height
+                         "income": $elem.income
+                        }
+                        #if($foreach.hasNext),#end
+                        #end
+                        ]
                     responseParameters:
                       method.response.header.Access-Control-Allow-Origin: '''*'''
                       method.response.header.Access-Control-Allow-Headers: '''Content-Type,Authorization,X-Amz-Date,X-Amz-Security-Token,X-Api-Key'''
@@ -315,6 +324,25 @@ Resources:
             Path: /compare-yourself/{type}
             Method: get
             RestApiId: !Ref ApiGatewayApi
+
+  cyCustomAuthFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./src/authorizer
+      FunctionName: cyCustomAuthFunction
+      Handler: cy-custom-auth.cyCustomAuthHandler
+      Runtime: nodejs20.x
+      Architectures:
+        - x86_64
+      MemorySize: 128
+      Timeout: 30
+      Policies:
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - execute-api:Invoke
+              Resource: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${ApiGatewayApi}/*
 
   compareYourselfTable:
     Type: AWS::DynamoDB::Table
