@@ -11,7 +11,7 @@ const tableName = process.env.DYNAMO_TABLE_NAME;
 
 export const cyStoreDataHandler = async (event, context, callback) => {
   const params = {
-    Item: {UserId: event.UserId, Age: event.age, Height: event.height, Income: event.income},
+    Item: {UserId: event.userId, Age: event.age, Height: event.height, Income: event.income},
     TableName: tableName
   }
 
