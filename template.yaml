@@ -353,6 +353,30 @@ Resources:
         - AttributeName: UserId
           KeyType: HASH
 
+  CognitoUserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: !Sub ${AWS::StackName}-UserPool
+      AliasAttributes:
+        - email
+      AutoVerifiedAttributes:
+        - email
+      Policies:
+        PasswordPolicy:
+          MinimumLength: 7
+          RequireLowercase: true
+          RequireNumbers: true
+          RequireSymbols: false
+          RequireUppercase: false
+
+  CognitoUserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      ClientName: !Sub ${AWS::StackName}-UserPoolClient
+      UserPoolId: !Ref CognitoUserPool
+      GenerateSecret: false
+      RefreshTokenValidity: 30
+
 Outputs:
   ApiEndpoint:
     Description: URL of the API endpoint
