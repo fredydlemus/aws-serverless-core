@@ -8,14 +8,19 @@ Resources:
     Properties:
       StageName: Dev
       Auth:
-        DefaultAuthorizer: MyLambdaTokenAuthorizer
+        # DefaultAuthorizer: MyLambdaTokenAuthorizer
+        DefaultAuthorizer: CognitoUserPoolAuthorizer
         Authorizers:
-          MyLambdaTokenAuthorizer:
-            FunctionArn: !GetAtt cyCustomAuthFunction.Arn
-            FunctionPayloadType: TOKEN
+          # MyLambdaTokenAuthorizer:
+          #   FunctionArn: !GetAtt cyCustomAuthFunction.Arn
+          #   FunctionPayloadType: TOKEN
+          #   Identity:
+          #     Header: Authorization
+          #     ReauthorizeEvery: 300
+          CognitoUserPoolAuthorizer:
+            UserPoolArn: !GetAtt CognitoUserPool.Arn
             Identity:
               Header: Authorization
-              ReauthorizeEvery: 300
         AddDefaultAuthorizerToCorsPreflight: false
       DefinitionBody:
         openapi: 3.0.1
@@ -326,17 +331,17 @@ Resources:
             Method: get
             RestApiId: !Ref ApiGatewayApi
 
-  cyCustomAuthFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      CodeUri: ./src/authorizer
-      FunctionName: cyCustomAuthFunction
-      Handler: cy-custom-auth.cyCustomAuthHandler
-      Runtime: nodejs20.x
-      Architectures:
-        - x86_64
-      MemorySize: 128
-      Timeout: 30
+  # cyCustomAuthFunction:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     CodeUri: ./src/authorizer
+  #     FunctionName: cyCustomAuthFunction
+  #     Handler: cy-custom-auth.cyCustomAuthHandler
+  #     Runtime: nodejs20.x
+  #     Architectures:
+  #       - x86_64
+  #     MemorySize: 128
+  #     Timeout: 30
 
   compareYourselfTable:
     Type: AWS::DynamoDB::Table
