@@ -201,7 +201,8 @@ Resources:
                 requestTemplates:
                   application/json: |
                     {
-                      "type": "$input.params('type')"
+                      "type": "$input.params('type')",
+                      "accessToken": "$input.params('access_token')"
                     }
                 responses:
                   default:
