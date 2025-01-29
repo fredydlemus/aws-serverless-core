@@ -142,6 +142,7 @@ Resources:
                     application/json:
                       schema:
                         type: object
+              # this is only for learning purposes, in real world, you should use authorizer         
               parameters:
                 - name: access_token
                   in: query
@@ -166,6 +167,12 @@ Resources:
               parameters:
                 - name: type
                   in: path
+                  required: true
+                  schema:
+                    type: string
+                # this is only for learning purposes, in real world, you should use authorizer
+                - name: access_token
+                  in: query
                   required: true
                   schema:
                     type: string
