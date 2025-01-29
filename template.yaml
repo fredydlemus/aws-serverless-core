@@ -124,6 +124,7 @@ Resources:
                       method.response.header.Access-Control-Allow-Headers: '''Content-Type,Authorization,X-Amz-Date,X-Amz-Security-Token,X-Api-Key'''
                       method.response.header.Access-Control-Allow-Methods: '''*'''
             delete:
+              x-amazon-apigateway-request-validator: ValidateParams
               responses:
                 '200':
                   description: Successful operation
@@ -141,6 +142,12 @@ Resources:
                     application/json:
                       schema:
                         type: object
+              parameters:
+                - name: access_token
+                  in: query
+                  required: true
+                  schema:
+                    type: string
               x-amazon-apigateway-integration:
                 type: AWS
                 uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${cyDeleteDataFunction.Arn}/invocations
