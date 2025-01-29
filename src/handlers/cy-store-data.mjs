@@ -20,7 +20,7 @@ export const cyStoreDataHandler = async (event, context, callback) => {
     console.log("Success - item added or updated", data);
     callback(null, data)
   }catch(error){
-    console.log("Error", err.stack);
-    callback(e)
+    console.log("Error", error.stack);
+    callback(error)
   }
 }
