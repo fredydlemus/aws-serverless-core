@@ -71,7 +71,7 @@ Resources:
                       "age": $inputRoot.age,
                       "height": $inputRoot.height,
                       "income": $inputRoot.income,
-                      "userId": "$context.authorizer.principalId"
+                      "userId": "$context.authorizer.claims.sub"
                     }
                 responses:
                   default:
